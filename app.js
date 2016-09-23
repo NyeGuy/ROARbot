@@ -2,7 +2,6 @@ var twilio = require('twilio'),
 client = twilio('AC513e87066a1e90d73e86ea276a800804', 'f3145ed7b367bf8e00d474795036cc58'),
 cronJob = require('cron').CronJob;
 
-
 //initialize express into a variable called app
 var express = require('express'),
 bodyParser = require('body-parser'),
@@ -13,7 +12,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-app.set('port', (process.env.PORT || 5000))
+app.set('port', PORT);
 
 //numbers we want to send to
 var numbers = ['3108898908', '3104220639'];
