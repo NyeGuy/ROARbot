@@ -10,14 +10,16 @@
     "express": "4.8.x",
     "body-parser": "1.8.x",
     "cron": "1.0.x",
-    "twilio": "1.2.x"
+    "twilio": "1.2.x",
+      "firebase": "3.4.0"
   },
   "keywords": [
     "twilio",
     "cron",
-    "sms"
+    "sms",
+      "firebase"
   ],
   "engines": {
-    "node": "v4.4.7"
+    "node": "4.4.7"
   }
 }

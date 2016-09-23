@@ -1,21 +1,31 @@
 var twilio = require('twilio'),
-client = twilio('AC513e87066a1e90d73e86ea276a800804', 'f3145ed7b367bf8e00d474795036cc58'),
-cronJob = require('cron').CronJob;
+    client = twilio('AC513e87066a1e90d73e86ea276a800804', 'f3145ed7b367bf8e00d474795036cc58'),
+    cronJob = require('cron').CronJob;
 
 //initialize express into a variable called app
 var express = require('express'),
-bodyParser = require('body-parser'),
-var request = require('request'),
-app = express();
+    bodyParser = require('body-parser'),
+    request = require('request'),
+    app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-app.set('port', PORT);
+//app.set('port', PORT);
 
-//numbers we want to send to
-var numbers = ['3108898908', '3104220639'];
+//firebase
+var Firebase = require('firebase'),
+    usersRef = new Firebase('https://gamebotdb.firebaseio.com/Users/');
+
+//numbers we want to send - will be stored in firebase
+var numbers = [];
+
+//adding new users to firebase
+usersRef.on('child_added', function(snapshot) {
+  numbers.push( snapshot.val() );
+  console.log( 'Added number ' + snapshot.val() );
+});
 
 //fire off cron to the numbers declared
 var textJob = new cronJob( '50 09 * * *', function(){
@@ -25,11 +35,6 @@ for( var i = 0; i < numbers.length; i++ ) {
   });
 }},  null, true);
 
-
-// Listen for server - tell me where it's running
-app.listen(app.get('port'), function() {
-    console.log('running on port', app.get('port'))
-})
 
 //adding route for /message using TwiML
 app.post('/message', function (req, res) {
