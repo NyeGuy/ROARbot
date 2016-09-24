@@ -14,7 +14,7 @@ var twilio = require('twilio'),
 //var port= process.env.PORT || 8000;
 //app.listen(port);
 
-var textJob = new cronJob( '55 18 * * *', function(){
+var textJob = new cronJob( '58 18 * * *', function(){
   client.sendMessage( { to:'3108898908', from:'4244656385', body:'Roar!' }, function( err, data ) {});
 },  null, true);
 
