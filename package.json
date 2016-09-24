@@ -10,7 +10,8 @@
     "body-parser": "1.8.x",
     "cron": "1.0.x",
     "express": "^4.8.8",
-    "twilio": "1.2.x"
+    "twilio": "1.2.x",
+      "firebase": "3.4.0"
   },
   "keywords": [
     "twilio",
