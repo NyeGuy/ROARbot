@@ -2,17 +2,25 @@ var twilio = require('twilio'),
     client = twilio('AC513e87066a1e90d73e86ea276a800804', 'f3145ed7b367bf8e00d474795036cc58'),
     cronJob = require('cron').CronJob;
 
-//initialize express into a variable called app
-var express = require('express'),
-    bodyParser = require('body-parser'),
-    request = require('request'),
-    app = express();
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
+'use strict'
 
-//app.set('port', PORT);
+const express = require('express')
+const bodyParser = require('body-parser')
+const request = require('request')
+const app = express()
+
+app.set('port', (process.env.PORT || 5000))
+
+// Process application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({extended: false}))
+
+// Process application/json
+app.use(bodyParser.json())
+
+// Index route
+app.get('/', function (req, res) {
+    res.send('Hello world, I am a chat bot')
+})
 
 //firebase
 var Firebase = require('firebase'),
@@ -44,7 +52,7 @@ app.post('/message', function (req, res) {
     if(numbers.indexOf(fromNum) !== -1) {
       resp.message('You already subscribed!');
     } else {
-      resp.message('Thank you, you will now be roared at! Reply "STOP" to stop receiving updates.');
+      resp.message('Thank you, you will now be ROARed at! Reply "STOP" to stop receiving updates.');
       usersRef.push(fromNum);
     }
   } else {
@@ -55,6 +63,11 @@ app.post('/message', function (req, res) {
   });
   res.end(resp.toString());
 });
+
+// Spin up the server
+app.listen(app.get('port'), function() {
+    console.log('running on port', app.get('port'))
+})
 
 
 
